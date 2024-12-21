@@ -1,0 +1,127 @@
+class BrushControl{
+    field Brush brush;
+    field int x, y, i;
+    field Array a; 
+    field char key;
+    field boolean exit;
+    field boolean status;
+    constructor BrushControl new(){
+        //array initialize
+        let i = 0;
+        let a = Array.new(784);
+        while (i < 784) {
+            let a[i] = 0; //black 255, white 0
+            let i = i + 1;
+        }
+        //brush initialize
+        let brush = Brush.new(0,0);
+        let x = 0;
+        let y = 0;
+        let status = 0;
+        return this;
+    }
+
+    method Array getTensor(){
+        return a;
+    }
+
+    method void run() {
+      let exit = false;
+      
+      while (~exit) {
+         // waits for a key to be pressed
+         while (key = 0) {
+            let key = Keyboard.keyPressed();
+         }
+         while (~(key = 0)) {
+            if (key = 131) { 
+                //do Output.printInt(x+(y*28));
+                // up arrow
+                do Sys.wait(100);
+                if(~status){
+                    do brush.erase();
+                    let a[x+(y*28)]=0;
+                }
+                else{
+                    let a[x+(y*28)]=255;
+                }
+                if(y>0){
+                    let y = y-1;
+                }
+                do brush.moveUp(); 
+            }   
+            if (key = 133) { 
+                //do Output.printInt(x+(y*28));
+                // down arrow
+                do Sys.wait(100);
+                if(~status){
+                    do brush.erase();
+                    let a[x+(y*28)]=0;
+                }
+                else{
+                    let a[x+(y*28)]=255;
+                }
+                if(y<27){
+                    let y = y+1;
+                }
+                do brush.moveDown(); 
+            }   
+            if (key = 130) { 
+                //do Output.printInt(x+(y*28));
+                // left arrow
+                do Sys.wait(100);
+                if(~status){
+                    do brush.erase();
+                    let a[x+(y*28)]=0;
+                }
+                else{
+                    let a[x+(y*28)]=255;
+                }
+                if(x>0){
+                    let x = x-1;
+                }
+                do brush.moveLeft(); 
+            }   
+            if (key = 132) { 
+                //do Output.printInt(x+(y*28));
+                // right arrow
+                do Sys.wait(100);
+                if(~status){
+                    do brush.erase();
+                    let a[x+(y*28)]=0;
+                }
+                else{
+                    let a[x+(y*28)]=255;
+                }
+                if(x<27){
+                    let x = x+1;
+                }
+                do brush.moveRight(); 
+            }   
+            if (key = 32){
+                //space
+                let status = ~status;
+            }
+            if (key = 139){
+                //delete
+                let i = 0;
+                while (i < 784) {
+                    let a[i] = 0;
+                    let i = i + 1;
+                }
+                do Screen.setColor(false);
+                do Screen.drawRectangle(40+10,40, 196+40+10, 196+40);
+            }
+            if (key = 128){
+                //enter
+                let exit = true;
+            }
+         // waits for the key to be released
+            let key = Keyboard.keyPressed();
+         }
+     } // while
+     return;
+   }
+    
+
+}

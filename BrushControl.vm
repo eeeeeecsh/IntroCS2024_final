@@ -1,0 +1,383 @@
+function BrushControl.new 0
+push constant 8
+call Memory.alloc 1
+pop pointer 0
+push constant 0
+pop this 3
+push constant 784
+call Array.new 1
+pop this 4
+label WHILE_EXP0
+push this 3
+push constant 784
+lt
+not
+if-goto WHILE_END0
+push this 3
+push this 4
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 3
+push constant 1
+add
+pop this 3
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+push constant 0
+call Brush.new 2
+pop this 0
+push constant 0
+pop this 1
+push constant 0
+pop this 2
+push constant 0
+pop this 7
+push pointer 0
+return
+function BrushControl.getTensor 0
+push argument 0
+pop pointer 0
+push this 4
+return
+function BrushControl.run 0
+push argument 0
+pop pointer 0
+push constant 0
+pop this 6
+label WHILE_EXP0
+push this 6
+not
+not
+if-goto WHILE_END0
+label WHILE_EXP1
+push this 5
+push constant 0
+eq
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop this 5
+goto WHILE_EXP1
+label WHILE_END1
+label WHILE_EXP2
+push this 5
+push constant 0
+eq
+not
+not
+if-goto WHILE_END2
+push this 5
+push constant 131
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 100
+call Sys.wait 1
+pop temp 0
+push this 7
+not
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 0
+call Brush.erase 1
+pop temp 0
+push this 1
+push this 2
+push constant 28
+call Math.multiply 2
+add
+push this 4
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+goto IF_END1
+label IF_FALSE1
+push this 1
+push this 2
+push constant 28
+call Math.multiply 2
+add
+push this 4
+add
+push constant 255
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+label IF_END1
+push this 2
+push constant 0
+gt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 2
+push constant 1
+sub
+pop this 2
+label IF_FALSE2
+push this 0
+call Brush.moveUp 1
+pop temp 0
+label IF_FALSE0
+push this 5
+push constant 133
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 100
+call Sys.wait 1
+pop temp 0
+push this 7
+not
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 0
+call Brush.erase 1
+pop temp 0
+push this 1
+push this 2
+push constant 28
+call Math.multiply 2
+add
+push this 4
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+goto IF_END4
+label IF_FALSE4
+push this 1
+push this 2
+push constant 28
+call Math.multiply 2
+add
+push this 4
+add
+push constant 255
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+label IF_END4
+push this 2
+push constant 27
+lt
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 2
+push constant 1
+add
+pop this 2
+label IF_FALSE5
+push this 0
+call Brush.moveDown 1
+pop temp 0
+label IF_FALSE3
+push this 5
+push constant 130
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push constant 100
+call Sys.wait 1
+pop temp 0
+push this 7
+not
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 0
+call Brush.erase 1
+pop temp 0
+push this 1
+push this 2
+push constant 28
+call Math.multiply 2
+add
+push this 4
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+goto IF_END7
+label IF_FALSE7
+push this 1
+push this 2
+push constant 28
+call Math.multiply 2
+add
+push this 4
+add
+push constant 255
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+label IF_END7
+push this 1
+push constant 0
+gt
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push this 1
+push constant 1
+sub
+pop this 1
+label IF_FALSE8
+push this 0
+call Brush.moveLeft 1
+pop temp 0
+label IF_FALSE6
+push this 5
+push constant 132
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push constant 100
+call Sys.wait 1
+pop temp 0
+push this 7
+not
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push this 0
+call Brush.erase 1
+pop temp 0
+push this 1
+push this 2
+push constant 28
+call Math.multiply 2
+add
+push this 4
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+goto IF_END10
+label IF_FALSE10
+push this 1
+push this 2
+push constant 28
+call Math.multiply 2
+add
+push this 4
+add
+push constant 255
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+label IF_END10
+push this 1
+push constant 27
+lt
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
+push this 1
+push constant 1
+add
+pop this 1
+label IF_FALSE11
+push this 0
+call Brush.moveRight 1
+pop temp 0
+label IF_FALSE9
+push this 5
+push constant 32
+eq
+if-goto IF_TRUE12
+goto IF_FALSE12
+label IF_TRUE12
+push this 7
+not
+pop this 7
+label IF_FALSE12
+push this 5
+push constant 139
+eq
+if-goto IF_TRUE13
+goto IF_FALSE13
+label IF_TRUE13
+push constant 0
+pop this 3
+label WHILE_EXP3
+push this 3
+push constant 784
+lt
+not
+if-goto WHILE_END3
+push this 3
+push this 4
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 3
+push constant 1
+add
+pop this 3
+goto WHILE_EXP3
+label WHILE_END3
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push constant 40
+push constant 10
+add
+push constant 40
+push constant 196
+push constant 40
+add
+push constant 10
+add
+push constant 196
+push constant 40
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE13
+push this 5
+push constant 128
+eq
+if-goto IF_TRUE14
+goto IF_FALSE14
+label IF_TRUE14
+push constant 0
+not
+pop this 6
+label IF_FALSE14
+call Keyboard.keyPressed 0
+pop this 5
+goto WHILE_EXP2
+label WHILE_END2
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return

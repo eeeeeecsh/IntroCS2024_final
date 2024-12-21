@@ -1,0 +1,198 @@
+class Main {
+   function void start(){
+      do Screen.clearScreen();
+      //the frame for drawing
+      do Screen.setColor(true);
+      do Screen.drawRectangle(33+10,33, 196+47+10, 196+47);
+      do Screen.setColor(false);
+      do Screen.drawRectangle(40+10,40, 196+40+10, 196+40);
+      //title
+      do Output.moveCursor(1,7);
+      do Output.printString("Draw a number in the box");
+      //instruction
+      do Output.moveCursor(5,43);
+      do Output.printString("to move the brush");
+      do Output.moveCursor(8,43);
+      do Output.printString("to switch between");
+      do Output.moveCursor(9,43);
+      do Output.printString("pen / eraser");
+      do Output.moveCursor(12,43);
+      do Output.printString("to clear all");
+      do Output.moveCursor(15,43);
+      do Output.printString("to comfirm the input");
+      do Output.moveCursor(16,43);
+      do Output.printString("and see the result");
+      //direction
+      //up
+      do Screen.setColor(true);
+      do Screen.drawRectangle(290,42,310,58);
+      do Screen.setColor(false);
+      do Screen.drawRectangle(291,43,308,56);
+      do Screen.setColor(true);
+      do Screen.drawRectangle(299,45,300,55);
+      do Screen.drawLine(300,45,295,50);
+      do Screen.drawLine(300,44,295,49);
+      do Screen.drawLine(300,45,305,50);
+      do Screen.drawLine(300,44,305,49);
+      //down
+      do Screen.setColor(true);
+      do Screen.drawRectangle(290,42+15,310,58+15);
+      do Screen.setColor(false);
+      do Screen.drawRectangle(291,43+15,308,56+15);
+      do Screen.setColor(true);
+      do Screen.drawRectangle(299,60,300,70);
+      do Screen.drawLine(300,70,295,65);
+      do Screen.drawLine(300,69,295,64);
+      do Screen.drawLine(300,70,305,65);
+      do Screen.drawLine(300,69,305,64);
+      //left
+      do Screen.setColor(true);
+      do Screen.drawRectangle(290-20,42+10,310-22,58+10);
+      do Screen.setColor(false);
+      do Screen.drawRectangle(291-20,43+10,308-22,56+10);
+      do Screen.setColor(true);
+      do Screen.drawRectangle(275,59,285,60);
+      do Screen.drawLine(275,60,280,55);
+      do Screen.drawLine(275,59,280,54);
+      do Screen.drawLine(275,60,280,65);
+      do Screen.drawLine(275,59,280,64);
+      //right
+      do Screen.setColor(true);
+      do Screen.drawRectangle(290+22,42+10,310+20,58+10);
+      do Screen.setColor(false);
+      do Screen.drawRectangle(291+22,43+10,308+20,56+10);
+      do Screen.setColor(true);
+      do Screen.drawRectangle(315,59,325,60);
+      do Screen.drawLine(325,60,320,55);
+      do Screen.drawLine(325,59,320,54);
+      do Screen.drawLine(325,60,320,65);
+      do Screen.drawLine(325,59,320,64);
+      //space
+      do Screen.setColor(true);
+      do Screen.drawRectangle(270,87,328,102);
+      do Screen.setColor(false);
+      do Screen.drawRectangle(271,88,326,100);
+      do Output.moveCursor(8,35);
+      do Output.printString("space");
+      //delete
+      do Screen.setColor(true);
+      do Screen.drawRectangle(270,87+44,328+8,102+44);
+      do Screen.setColor(false);
+      do Screen.drawRectangle(271,88+44,326+8,100+44);
+      do Output.moveCursor(12,35);
+      do Output.printString("delete");
+      //enter
+      do Screen.setColor(true);
+      do Screen.drawRectangle(270,87+77,328,102+77);
+      do Screen.setColor(false);
+      do Screen.drawRectangle(271,88+77,326,100+77);
+      do Output.moveCursor(15,35);
+      do Output.printString("enter");
+      //pridiction
+      do Output.moveCursor(19,38);
+      do Output.printString("Prediction: ");
+      return;
+   }
+
+   function Array add(int a_high,int a_low,int b_high,int b_low){
+      var Array a;
+      var int mask,i,carry,n;
+      let a = Array.new(2);
+      let i = 0;
+      let carry = 0;
+      let mask = 1;
+      let a[0] = 0;
+      let a[1] = 0;
+      while(i<16){
+         let n = ((a_low&mask)+(b_low&mask))/mask+carry;
+         if(n=3){
+            let carry = 1;
+            let a[1] = a[1]+mask;
+         }
+         if(n=2){
+            let carry = 1;
+         }
+         if(n=1){
+            let carry = 0;
+            let a[1] = a[1]+mask;
+         }
+         if(n=0){
+            let carry = 0;
+         }
+         do Output.printInt(n);
+         do Output.printString(" ");
+         // do Output.printInt(a[1]);
+         let i = i+1;
+         let mask = mask*2;
+      }
+      let mask = 1;
+      while(i<32){
+         let n = ((a_high&mask)+(b_high&mask))/mask+carry;
+         if(n=3){
+            let carry = 1;
+            let a[0] = a[0]+mask;
+         }
+         if(n=2){
+            let carry = 1;
+         }
+         if(n=1){
+            let carry = 0;
+            let a[0] = a[0]+mask;
+         }
+         if(n=0){
+            let carry = 0;
+         }
+         do Output.printInt(n);
+         do Output.printString(" ");
+         let i = i+1;
+         let mask = mask*2;
+      }
+      return a;
+   }
+
+   function Array subtract(int a_high,int a_low,int b_high,int b_low){
+      var int mask,i,carry,n;
+      let b_high = ~b_high;
+      let b_low = ~b_low;
+      let b_low = b_low+1;
+      do Output.printInt(b_high);
+      do Output.printString(" ");
+      do Output.printInt(b_low);
+      do Output.printString(" ");
+      return Main.add(a_high,a_low,b_high,b_low);
+   }
+
+   function void main() {
+      var BrushControl control;
+      var int i,j,n;
+      var Array t;
+      do Main.start();
+      do Output.moveCursor(21,3);
+      let t = Main.add(-1,-1,-1,-1);
+      do Output.printInt(t[0]);
+      do Output.printString(" ");
+      do Output.printInt(t[1]);
+      let control = BrushControl.new();
+      do control.run();
+      
+      //check whether the array is correct or not
+      let t = control.getTensor();
+      let i = 0;
+      let j = 0;
+      do Output.moveCursor(21,3);
+      do Screen.setColor(true);
+      while (i < 28) {
+         let j = 0;
+         while(j<28){
+            let n = t[(i*28)+j];
+            if(n=255){
+               do Screen.drawPixel(400+j,220+i);
+            }
+            let j = j+1;
+         }
+         let i = i+1;
+      }
+      
+      return;
+   }
+}

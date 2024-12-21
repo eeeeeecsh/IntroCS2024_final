@@ -1,0 +1,66 @@
+class Brush {
+
+   field int x, y; // screen location of the top-left corner of this square
+   field int size; // length of this square, in pixels
+
+   /** Constructs and draws a new square with a given location and size. */
+   constructor Brush new(int ax, int ay) {
+      let x = ax;
+      let y = ay;
+      let size = 7;
+      do draw();
+      return this;
+   }
+
+   /** Draws this square in its current (x,y) location */
+   method void draw() {
+      // Draws the square using the color black
+      do Screen.setColor(true);
+      do Screen.drawRectangle(50+(x*size), 40+(y*size), 50+((x+1)*size), 40+((y+1)*size));
+      return;
+   }
+
+   /** Erases this square. */
+   method void erase() {
+      // Draws the square using the color white (background color)
+      do Screen.setColor(false);
+      do Screen.drawRectangle(50+(x*size), 40+(y*size), 50+((x+1)*size), 40+((y+1)*size));
+      return;
+   }
+
+   /** Moves this square up (if possible). */
+   method void moveUp() {
+        if (y > 0) {
+            let y = y - 1;
+            do draw();
+        }
+      return;
+   }
+
+   /** Moves the square down (if possible). */
+   method void moveDown() {
+      if (y<27) {
+        let y = y + 1;
+        do draw();
+      }
+      return;
+   }
+
+   /** Moves the square left (if possible). */
+   method void moveLeft() {
+      if (x > 0) {
+         let x = x - 1;
+         do draw();
+      }
+      return;
+   }
+
+   /** Moves the square right (if possible). */
+   method void moveRight() {
+      if (x<27) {
+         let x = x + 1;
+         do draw();
+      }
+      return;
+   }
+}
