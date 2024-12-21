@@ -94,84 +94,11 @@ class Main {
       return;
    }
 
-   function Array add(int a_high,int a_low,int b_high,int b_low){
-      var Array a;
-      var int mask,i,carry,n;
-      let a = Array.new(2);
-      let i = 0;
-      let carry = 0;
-      let mask = 1;
-      let a[0] = 0;
-      let a[1] = 0;
-      while(i<16){
-         let n = (((a_low&mask)/mask)+((b_low&mask)/mask))+carry;
-         if(n=3){
-            let carry = 1;
-            let a[1] = a[1]+mask;
-         }
-         if(n=2){
-            let carry = 1;
-         }
-         if(n=1){
-            let carry = 0;
-            let a[1] = a[1]+mask;
-         }
-         if(n=0){
-            let carry = 0;
-         }
-         do Output.printInt(n);
-         do Output.printString(" ");
-         // do Output.printInt(mask);
-         let i = i+1;
-         let mask = mask*2;
-      }
-      let mask = 1;
-      while(i<32){
-         let n = (((a_high&mask)/mask)+((b_high&mask)/mask))+carry;
-         if(n=3){
-            let carry = 1;
-            let a[0] = a[0]+mask;
-         }
-         if(n=2){
-            let carry = 1;
-         }
-         if(n=1){
-            let carry = 0;
-            let a[0] = a[0]+mask;
-         }
-         if(n=0){
-            let carry = 0;
-         }
-         do Output.printInt(n);
-         do Output.printString(" ");
-         let i = i+1;
-         let mask = mask*2;
-      }
-      return a;
-   }
-
-   function Array subtract(int a_high,int a_low,int b_high,int b_low){
-      var int mask,i,carry,n;
-      let b_high = ~b_high;
-      let b_low = ~b_low;
-      let b_low = b_low+1;
-      do Output.printInt(b_high);
-      do Output.printString(" ");
-      do Output.printInt(b_low);
-      do Output.printString(" ");
-      return Main.add(a_high,a_low,b_high,b_low);
-   }
-
    function void main() {
       var BrushControl control;
       var int i,j,n;
       var Array t;
       do Main.start();
-      do Output.moveCursor(21,3);
-      let t = Main.subtract(-1,-1,0,1);
-      do Output.printInt(t[0]);
-      do Output.printString(" ");
-      do Output.printInt(t[1]);
       let control = BrushControl.new();
       do control.run();
       /*

@@ -1,0 +1,267 @@
+class Network {
+    field Array hidden_weight, output_weight;
+    field Array hidden_bias_high, hidden_bias_low, output_bias_high, output_bias_low;
+    constructor Network new(){
+        let hidden_weight = Memory.alloc(7000);
+        let output_weight = Memory.alloc(80);
+        let hidden_bias_high = Memory.alloc(8);
+        let hidden_bias_low = Memory.alloc(8);
+        let output_bias_high = Memory.alloc(10);
+        let output_bias_low = Memory.alloc(10);
+        return this;
+    }
+    function Array add32(int a_high,int a_low,int b_high,int b_low){
+        var Array a;
+        var int mask,i,carry,n;
+        let a = Array.new(2);
+        let i = 0;
+        let carry = 0;
+        let mask = 1;
+        let a[0] = 0;
+        let a[1] = 0;
+        while(i<16){
+            let n = (((a_low&mask)/mask)+((b_low&mask)/mask))+carry;
+            if(n=3){
+            let carry = 1;
+            let a[1] = a[1]+mask;
+            }
+            if(n=2){
+            let carry = 1;
+            }
+            if(n=1){
+            let carry = 0;
+            let a[1] = a[1]+mask;
+            }
+            if(n=0){
+            let carry = 0;
+            }
+            let i = i+1;
+            let mask = mask*2;
+        }
+        let mask = 1;
+        while(i<32){
+            let n = (((a_high&mask)/mask)+((b_high&mask)/mask))+carry;
+            if(n=3){
+            let carry = 1;
+            let a[0] = a[0]+mask;
+            }
+            if(n=2){
+            let carry = 1;
+            }
+            if(n=1){
+            let carry = 0;
+            let a[0] = a[0]+mask;
+            }
+            if(n=0){
+            let carry = 0;
+            }
+            // do Output.printInt(n);
+            // do Output.printString(" ");
+            let i = i+1;
+            let mask = mask*2;
+        }
+        return a;
+    }
+
+    function Array subtract32(int a_high,int a_low,int b_high,int b_low){
+        var int mask,i,carry,n;
+        let b_high = ~b_high;
+        let b_low = ~b_low;
+        let b_low = b_low+1;
+        do Output.printInt(b_high);
+        do Output.printString(" ");
+        do Output.printInt(b_low);
+        do Output.printString(" ");
+        return Network.add32(a_high,a_low,b_high,b_low);
+    }
+    function Array mul32(int a_high,int a_low,int b_high,int b_low){
+        var Array a,tmp;
+        var int mask,i,n;
+        let a = Array.new(2);
+        let tmp = Array.new(2);
+        let i = 0;
+        let a[0] = 0;
+        let a[1] = 0;
+        let mask = 1;
+        
+        while(i<16){
+            if ((b_low&mask)/mask=1){
+            let tmp = Main.add(a[0],a[1],a_high,a_low);
+            let a[0] = tmp[0];
+            let a[1] = tmp[1];
+            }
+            let tmp = Main.add(a_high,a_low,a_high,a_low);
+            let a_high = tmp[0];
+            let a_low = tmp[1];
+            let i = i+1;
+            let mask = mask*2;
+        }
+        let mask = 1;
+        while(i<32){
+            if ((b_high&mask)/mask=1){
+            let a = Main.add(a[0],a[1],a_high,a_low);
+            }
+            let tmp = Main.add(a_high,a_low,a_high,a_low);
+            let a_high = tmp[0];
+            let a_low = tmp[1];
+            let i = i+1;
+            let mask = mask*2;
+        }
+        do tmp.dispose();
+        return a;
+    }
+    function int cmp32(int a_high,int a_low,int b_high,int b_low){
+        var Array a;
+        var boolean ret;
+        let a = Network.subtract32(a_high,a_low,b_high,b_low);
+        if(a[0]<0){
+            let ret = -1;
+        }
+        else{
+            if(a[0]>0){
+            let ret = 1;
+            }
+            else{
+            if(a[1]=0){
+                let ret = 0;
+            }
+            else{
+                let ret = 1;
+            }
+            
+            }
+        }
+        do a.dispose();
+        return ret;
+    }
+    function Array vecDot16(Array a, Array b, int len){  // a: neuron, b: weight
+        var Array sum;
+        var int i;
+        let sum = Array.new(2);
+        let sum[0] = 0;
+        let sum[1] = 0;
+        let i = 0;
+        while(i < len){
+            if(a[i] * b[i] < 0){
+                let sum = Network.add32(-1, (a[i]*b[i]), sum[0], sum[1]);
+            }
+            else{
+                let sum = Network.add32(0, (a[i]*b[i]), sum[0], sum[1]);
+            }
+            let i = i + 1;
+        }
+        return sum;
+    }
+    function Array vecDot32(Array a_high, Array a_low, Array b, int len){  // a: neuron, b: weight
+        var Array sum;
+        var Array tmp;
+        var int i;
+        let sum = Array.new(2);
+        let sum[0] = 0;
+        let sum[1] = 0;
+        let i = 0;
+        while(i < len){
+            if(b[i] < 0){
+                let tmp = Network.mul32(a_high[i], a_low[i], -1, b[i]);
+            }
+            else{
+                let tmp = Network.mul32(a_high[i], a_low[i], 0, b[i]);
+            }
+            let sum = Network.add32(tmp[0], tmp[1], sum[0], sum[1]);
+            let i = i + 1;
+        }
+        return sum;
+    }
+    function void vecAdd32(Array a_high, Array a_low, Array b_high, Array b_low, int len){  // add to array a
+        var int i;
+        var Array tmp;
+        let i = 0;
+        while(i < len){
+            let tmp = Network.add32(a_high[i], a_low[i], b_high[i], b_low[i]);
+            let a_high[i] = tmp[0];
+            let a_low[i] = tmp[1];
+            let i = i + 1;
+        }
+        return;
+    }
+    function void relu(Array a_high, Array a_low, int len){
+        var int i;
+        let i = 0;
+        while(i < len){
+            if(Network.cmp32(a_high[i], a_low[i], 0, 0) = -1){
+                let a_high[i] = 0;
+                let a_low[i] = 0;
+            }
+            let i = i + 1;
+        }
+        return;
+    }
+    function int argMax(Array a_high, Array a_low, int len){  // TODO
+        var int maxnum_high, maxnum_low, max_id, i;
+        let maxnum_high = -1;
+        let maxnum_low = -1;
+        let max_id = 0;
+        let i = 0;
+        while(i < len){
+            if(Network.cmp32(a_high[i], a_low[i], maxnum_high, maxnum_low) = 1){
+                let max_id = i;
+                let maxnum_high = a_high[i];
+                let maxnum_low = a_low[i];
+            }
+            let i = i + 1;
+        }
+        return max_id;
+    }
+    method int forward(Array x){  // x.shape=784
+        var Array hidden_neuron_high, hidden_neuron_low;
+        var Array output_neuron_high, output_neuron_low;
+        var Array tmp;
+        var Array dummy_arr;
+        var int i, j;
+        var int ans;
+        let hidden_neuron_high = Array.new(8);
+        let hidden_neuron_low = Array.new(8);
+        let output_neuron_high = Array.new(8);
+        let output_neuron_low = Array.new(8);
+        let ans = 0;
+        // hidden layer
+        let i = 0;
+        while(i < 8){
+            let tmp = Network.vecDot16(x, hidden_weight+(784*i), 784);
+            let hidden_neuron_high[i] = tmp[0];
+            let hidden_neuron_low[i] = tmp[1];
+            let i = i + 1;
+        }
+        do Network.vecAdd32(hidden_neuron_high, hidden_neuron_low, hidden_bias_high, hidden_bias_low, 8);
+        do Network.relu(hidden_neuron_high, hidden_neuron_low, 8);
+        // output layer
+        let i = 0;
+        while(i < 10){
+            let tmp = Network.vecDot32(hidden_neuron_high, hidden_neuron_low, output_weight+(8*i), 8);
+            let output_neuron_high[i] = tmp[0];
+            let output_neuron_low[i] = tmp[1];
+            let i = i + 1;
+        }
+        do Network.vecAdd32(output_neuron_high, output_neuron_low, output_bias_high, output_bias_low, 8);
+        let ans = Network.argMax(output_neuron_high, output_neuron_low, 10);
+        return ans;
+    }
+    method int test(){
+        var Array a, b;
+        var Array ans;
+        var int i;
+        let a = Array.new(8);
+        let b = Array.new(8);
+        let i = 0;
+        while(i < 8){
+            let a[i] = i;
+            let b[i] = i;
+            let i = i + 1;
+        }
+        let ans = Network.vecDot16(a+4, b+4, 4);
+        do Output.printInt(ans[0]);
+        do Output.printString(" ");
+        do Output.printInt(ans[1]);
+        return ans;
+    }
+}
