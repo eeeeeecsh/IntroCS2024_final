@@ -786,12 +786,14 @@ if-goto WHILE_END0
 push argument 1
 push local 1
 and
+push local 1
+call Math.divide 2
 push argument 3
 push local 1
 and
-add
 push local 1
 call Math.divide 2
+add
 push local 3
 add
 pop local 4
@@ -889,12 +891,14 @@ if-goto WHILE_END1
 push argument 0
 push local 1
 and
+push local 1
+call Math.divide 2
 push argument 2
 push local 1
 and
-add
 push local 1
 call Math.divide 2
+add
 push local 3
 add
 pop local 4
@@ -1029,11 +1033,9 @@ push constant 1
 neg
 push constant 1
 neg
+push constant 0
 push constant 1
-neg
-push constant 1
-neg
-call Main.add 4
+call Main.subtract 4
 pop local 4
 push constant 0
 push local 4
@@ -1060,71 +1062,5 @@ pop local 0
 push local 0
 call BrushControl.run 1
 pop temp 0
-push local 0
-call BrushControl.getTensor 1
-pop local 4
-push constant 0
-pop local 1
-push constant 0
-pop local 2
-push constant 21
-push constant 3
-call Output.moveCursor 2
-pop temp 0
-push constant 0
-not
-call Screen.setColor 1
-pop temp 0
-label WHILE_EXP0
-push local 1
-push constant 28
-lt
-not
-if-goto WHILE_END0
-push constant 0
-pop local 2
-label WHILE_EXP1
-push local 2
-push constant 28
-lt
-not
-if-goto WHILE_END1
-push local 1
-push constant 28
-call Math.multiply 2
-push local 2
-add
-push local 4
-add
-pop pointer 1
-push that 0
-pop local 3
-push local 3
-push constant 255
-eq
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
-push constant 400
-push local 2
-add
-push constant 220
-push local 1
-add
-call Screen.drawPixel 2
-pop temp 0
-label IF_FALSE0
-push local 2
-push constant 1
-add
-pop local 2
-goto WHILE_EXP1
-label WHILE_END1
-push local 1
-push constant 1
-add
-pop local 1
-goto WHILE_EXP0
-label WHILE_END0
 push constant 0
 return

@@ -104,7 +104,7 @@ class Main {
       let a[0] = 0;
       let a[1] = 0;
       while(i<16){
-         let n = ((a_low&mask)+(b_low&mask))/mask+carry;
+         let n = (((a_low&mask)/mask)+((b_low&mask)/mask))+carry;
          if(n=3){
             let carry = 1;
             let a[1] = a[1]+mask;
@@ -121,13 +121,13 @@ class Main {
          }
          do Output.printInt(n);
          do Output.printString(" ");
-         // do Output.printInt(a[1]);
+         // do Output.printInt(mask);
          let i = i+1;
          let mask = mask*2;
       }
       let mask = 1;
       while(i<32){
-         let n = ((a_high&mask)+(b_high&mask))/mask+carry;
+         let n = (((a_high&mask)/mask)+((b_high&mask)/mask))+carry;
          if(n=3){
             let carry = 1;
             let a[0] = a[0]+mask;
@@ -168,13 +168,13 @@ class Main {
       var Array t;
       do Main.start();
       do Output.moveCursor(21,3);
-      let t = Main.add(-1,-1,-1,-1);
+      let t = Main.subtract(-1,-1,0,1);
       do Output.printInt(t[0]);
       do Output.printString(" ");
       do Output.printInt(t[1]);
       let control = BrushControl.new();
       do control.run();
-      
+      /*
       //check whether the array is correct or not
       let t = control.getTensor();
       let i = 0;
@@ -192,7 +192,7 @@ class Main {
          }
          let i = i+1;
       }
-      
+      */
       return;
    }
 }
