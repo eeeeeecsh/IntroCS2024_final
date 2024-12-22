@@ -37,7 +37,6 @@ class BrushControl{
             if (key = 131) { 
                 //do Output.printInt(x+(y*28));
                 // up arrow
-                do Sys.wait(100);
                 if(~status){
                     do brush.erase();
                     let a[x+(y*14)]=0;
@@ -53,7 +52,6 @@ class BrushControl{
             if (key = 133) { 
                 //do Output.printInt(x+(y*28));
                 // down arrow
-                do Sys.wait(100);
                 if(~status){
                     do brush.erase();
                     let a[x+(y*14)]=0;
@@ -69,7 +67,6 @@ class BrushControl{
             if (key = 130) { 
                 //do Output.printInt(x+(y*28));
                 // left arrow
-                do Sys.wait(100);
                 if(~status){
                     do brush.erase();
                     let a[x+(y*14)]=0;
@@ -85,7 +82,6 @@ class BrushControl{
             if (key = 132) { 
                 //do Output.printInt(x+(y*28));
                 // right arrow
-                do Sys.wait(100);
                 if(~status){
                     do brush.erase();
                     let a[x+(y*14)]=0;
@@ -101,6 +97,14 @@ class BrushControl{
             if (key = 32){
                 //space
                 let status = ~status;
+                do Output.moveCursor(2,49);
+                if(status){
+                    do Output.printString("pen   ");
+                }
+                else{
+                    do Output.printString("eraser");
+                }
+                
             }
             if (key = 139){
                 //delete
@@ -111,12 +115,14 @@ class BrushControl{
                 }
                 do Screen.setColor(false);
                 do Screen.drawRectangle(40+10,40, 196+40+10, 196+40);
+                do brush.draw();
             }
             if (key = 128){
                 //enter
                 let exit = true;
             }
          // waits for the key to be released
+            do Sys.wait(175);
             let key = Keyboard.keyPressed();
          }
      } // while

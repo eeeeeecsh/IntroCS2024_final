@@ -10,6 +10,8 @@ class Main {
       do Output.moveCursor(1,7);
       do Output.printString("Draw a number in the box");
       //instruction
+      do Output.moveCursor(2,35);
+      do Output.printString("Brush status: eraser");
       do Output.moveCursor(5,43);
       do Output.printString("to move the brush");
       do Output.moveCursor(8,43);
@@ -101,6 +103,7 @@ class Main {
       do Main.start();
       let control = BrushControl.new();
       do control.run();
+      do Output.moveCursor(19,59);
       /*
       //check whether the array is correct or not
       let t = control.getTensor();
