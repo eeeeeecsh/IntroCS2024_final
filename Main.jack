@@ -98,12 +98,17 @@ class Main {
 
    function void main() {
       var BrushControl control;
-      var int i,j,n;
+      var int i,j,n,ans;
       var Array t;
+      var Network network;
       do Main.start();
       let control = BrushControl.new();
       do control.run();
       do Output.moveCursor(19,59);
+      let t = control.getTensor();
+      let network = Network.new();
+      let ans = network.forward(t);
+      do Output.printInt(ans);
       /*
       //check whether the array is correct or not
       let t = control.getTensor();
