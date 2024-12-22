@@ -108,10 +108,10 @@ class Main {
       let j = 0;
       do Output.moveCursor(21,3);
       do Screen.setColor(true);
-      while (i < 28) {
+      while (i < 14) {
          let j = 0;
-         while(j<28){
-            let n = t[(i*28)+j];
+         while(j<14){
+            let n = t[(i*14)+j];
             if(n=255){
                do Screen.drawPixel(400+j,220+i);
             }

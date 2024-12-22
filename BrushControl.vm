@@ -4,12 +4,12 @@ call Memory.alloc 1
 pop pointer 0
 push constant 0
 pop this 3
-push constant 784
+push constant 196
 call Array.new 1
 pop this 4
 label WHILE_EXP0
 push this 3
-push constant 784
+push constant 196
 lt
 not
 if-goto WHILE_END0
@@ -90,7 +90,7 @@ call Brush.erase 1
 pop temp 0
 push this 1
 push this 2
-push constant 28
+push constant 14
 call Math.multiply 2
 add
 push this 4
@@ -104,7 +104,7 @@ goto IF_END1
 label IF_FALSE1
 push this 1
 push this 2
-push constant 28
+push constant 14
 call Math.multiply 2
 add
 push this 4
@@ -149,7 +149,7 @@ call Brush.erase 1
 pop temp 0
 push this 1
 push this 2
-push constant 28
+push constant 14
 call Math.multiply 2
 add
 push this 4
@@ -163,7 +163,7 @@ goto IF_END4
 label IF_FALSE4
 push this 1
 push this 2
-push constant 28
+push constant 14
 call Math.multiply 2
 add
 push this 4
@@ -175,7 +175,7 @@ push temp 0
 pop that 0
 label IF_END4
 push this 2
-push constant 27
+push constant 13
 lt
 if-goto IF_TRUE5
 goto IF_FALSE5
@@ -208,7 +208,7 @@ call Brush.erase 1
 pop temp 0
 push this 1
 push this 2
-push constant 28
+push constant 14
 call Math.multiply 2
 add
 push this 4
@@ -222,7 +222,7 @@ goto IF_END7
 label IF_FALSE7
 push this 1
 push this 2
-push constant 28
+push constant 14
 call Math.multiply 2
 add
 push this 4
@@ -267,7 +267,7 @@ call Brush.erase 1
 pop temp 0
 push this 1
 push this 2
-push constant 28
+push constant 14
 call Math.multiply 2
 add
 push this 4
@@ -281,7 +281,7 @@ goto IF_END10
 label IF_FALSE10
 push this 1
 push this 2
-push constant 28
+push constant 14
 call Math.multiply 2
 add
 push this 4
@@ -293,7 +293,7 @@ push temp 0
 pop that 0
 label IF_END10
 push this 1
-push constant 27
+push constant 13
 lt
 if-goto IF_TRUE11
 goto IF_FALSE11
@@ -327,7 +327,7 @@ push constant 0
 pop this 3
 label WHILE_EXP3
 push this 3
-push constant 784
+push constant 196
 lt
 not
 if-goto WHILE_END3

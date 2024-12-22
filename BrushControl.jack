@@ -8,8 +8,8 @@ class BrushControl{
     constructor BrushControl new(){
         //array initialize
         let i = 0;
-        let a = Array.new(784);
-        while (i < 784) {
+        let a = Array.new(196);
+        while (i < 196) {
             let a[i] = 0; //black 255, white 0
             let i = i + 1;
         }
@@ -40,10 +40,10 @@ class BrushControl{
                 do Sys.wait(100);
                 if(~status){
                     do brush.erase();
-                    let a[x+(y*28)]=0;
+                    let a[x+(y*14)]=0;
                 }
                 else{
-                    let a[x+(y*28)]=255;
+                    let a[x+(y*14)]=255;
                 }
                 if(y>0){
                     let y = y-1;
@@ -56,12 +56,12 @@ class BrushControl{
                 do Sys.wait(100);
                 if(~status){
                     do brush.erase();
-                    let a[x+(y*28)]=0;
+                    let a[x+(y*14)]=0;
                 }
                 else{
-                    let a[x+(y*28)]=255;
+                    let a[x+(y*14)]=255;
                 }
-                if(y<27){
+                if(y<13){
                     let y = y+1;
                 }
                 do brush.moveDown(); 
@@ -72,10 +72,10 @@ class BrushControl{
                 do Sys.wait(100);
                 if(~status){
                     do brush.erase();
-                    let a[x+(y*28)]=0;
+                    let a[x+(y*14)]=0;
                 }
                 else{
-                    let a[x+(y*28)]=255;
+                    let a[x+(y*14)]=255;
                 }
                 if(x>0){
                     let x = x-1;
@@ -88,12 +88,12 @@ class BrushControl{
                 do Sys.wait(100);
                 if(~status){
                     do brush.erase();
-                    let a[x+(y*28)]=0;
+                    let a[x+(y*14)]=0;
                 }
                 else{
-                    let a[x+(y*28)]=255;
+                    let a[x+(y*14)]=255;
                 }
-                if(x<27){
+                if(x<13){
                     let x = x+1;
                 }
                 do brush.moveRight(); 
@@ -105,7 +105,7 @@ class BrushControl{
             if (key = 139){
                 //delete
                 let i = 0;
-                while (i < 784) {
+                while (i < 196) {
                     let a[i] = 0;
                     let i = i + 1;
                 }
