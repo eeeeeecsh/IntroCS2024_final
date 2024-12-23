@@ -104,10 +104,14 @@ class Main {
       do Main.start();
       let control = BrushControl.new();
       do control.run();
-      do Output.moveCursor(19,59);
+      do Output.moveCursor(19,50);
+      do Output.printString("loading...");
       let t = control.getTensor();
       let network = Network.new();
       let ans = network.forward(t);
+      do Output.moveCursor(19,50);
+      do Output.printString("          ");
+      do Output.moveCursor(19,53);
       do Output.printInt(ans);
       /*
       //check whether the array is correct or not
